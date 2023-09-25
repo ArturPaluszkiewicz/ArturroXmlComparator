@@ -3,16 +3,16 @@ using System.Text.RegularExpressions;
 
 namespace xmlcomperator;
 
-public class XmlComperator
+public class XmlComparator
 {
     private readonly string _fileOnePath;
     private readonly string _fileTwoPath;
-    public XmlComperator(string fileOnePath, string fileTwoPath)
+    public XmlComparator(string fileOnePath, string fileTwoPath)
     {
         _fileOnePath = fileOnePath;
         _fileTwoPath = fileTwoPath;
     }
-    public XmlComperator()
+    public XmlComparator()
     {
         _fileOnePath = "model1.xml";
         _fileTwoPath = "model2.xml";

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xmlcomperator", "xmlcomperator.csproj", "{C592EF72-A2B1-4DAB-ADE1-6C2679AFFD4E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xmlcomparator", "xmlcomparator.csproj", "{28AEDFC1-E883-4360-85E5-A9AE0902D13E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C592EF72-A2B1-4DAB-ADE1-6C2679AFFD4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C592EF72-A2B1-4DAB-ADE1-6C2679AFFD4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C592EF72-A2B1-4DAB-ADE1-6C2679AFFD4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28AEDFC1-E883-4360-85E5-A9AE0902D13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28AEDFC1-E883-4360-85E5-A9AE0902D13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28AEDFC1-E883-4360-85E5-A9AE0902D13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28AEDFC1-E883-4360-85E5-A9AE0902D13E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
