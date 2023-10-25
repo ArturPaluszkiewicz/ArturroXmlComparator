@@ -23,19 +23,36 @@ public class XmlComparator
         var file2Elements = GetsElementsFromFile(_fileTwoPath);
 
         var report = new StringBuilder();
+        var diffrence = new StringBuilder();
+        bool withValue = true;
+        report.AppendLine("Algorytm rozpoczol porownywanie plikow");
 
-        report.AppendLine("Plik 1 elementy: ");
         foreach(var element in file1Elements)
         {
-            report.AppendLine(element.Key);
-            
+            // trzeba pobrac element i poszukac czy w drugiej liscie tez jest taki i jesli jest to sprawdziic czy sa takie same , 
+            //a nastepnie usunac go z listy
+            if (file2Elements.ContainsKey(element.Key))
+            {
+                if(!CompareElement(element.Value,file2Elements.GetValueOrDefault(element.Key)??""))
+                {
+                    diffrence.AppendLine(element.Key);
+                    if(withValue == true)
+                    {
+                        diffrence.AppendLine(element.Value);
+                    }
+                }
+                file2Elements.Remove(element.Key);
+            }
+            else
+            {
+                diffrence.AppendLine(element.Key);
+                if(withValue == true)
+                {
+                    diffrence.AppendLine(element.Value);
+                }
+            }
         }
-        report.AppendLine("Plik 2 elementy: ");
-        foreach(var element in file2Elements)
-        {
-            report.AppendLine(element.Key);
-            report.AppendLine(element.Value);
-        }
+        report.AppendLine(diffrence.ToString());
         bool difFile = false;
 
         saveToFile(report.ToString());
@@ -167,7 +184,15 @@ public class XmlComparator
             Console.WriteLine(e.Message);
         }
     }
-    private string checkIfElementAlredyAdded(ref Dictionary<string, string> listOfElements, string keyToCheck, int version)
+    private Boolean CompareElement(string elementOne, string elementTwo)
+    {
+        if(elementOne==elementTwo)
+        {
+            return true;
+        }
+        return false;
+    }
+    private string CheckIfElementAlredyAdded(ref Dictionary<string, string> listOfElements, string keyToCheck, int version)
     {
         if(version != 0)
         {
@@ -175,7 +200,7 @@ public class XmlComparator
         }
         if(listOfElements.ContainsKey(keyToCheck))
         {
-            checkIfElementAlredyAdded(ref listOfElements,keyToCheck,++version);
+            CheckIfElementAlredyAdded(ref listOfElements,keyToCheck,++version);
         }
         return keyToCheck;
     }
