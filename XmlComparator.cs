@@ -7,25 +7,29 @@ public class XmlComparator
 {
     private readonly string _fileOnePath;
     private readonly string _fileTwoPath;
+    private readonly StringBuilder report;
+    private readonly StringBuilder diffrence;
     public XmlComparator(string fileOnePath, string fileTwoPath)
     {
         _fileOnePath = fileOnePath;
         _fileTwoPath = fileTwoPath;
+        report = new StringBuilder();
+        diffrence = new StringBuilder();
+
     }
     public XmlComparator()
     {
         _fileOnePath = "model1.xml";
         _fileTwoPath = "model2.xml";
+        report = new StringBuilder();
+        diffrence = new StringBuilder();
     }
-    public bool CompareByElement()
+    public void CompareByElement(Boolean withValue)
     {
         var file1Elements = GetsElementsFromFile(_fileOnePath);
         var file2Elements = GetsElementsFromFile(_fileTwoPath);
 
-        var report = new StringBuilder();
-        var diffrence = new StringBuilder();
-        bool withValue = true;
-        report.AppendLine("Algorytm rozpoczol porownywanie plikow");
+        report.AppendLine("Algorithm start compare files...");
 
         foreach(var element in file1Elements)
         {
@@ -50,11 +54,8 @@ public class XmlComparator
                 }
             }
         }
-        report.AppendLine(diffrence.ToString());
-        bool difFile = false;
-
-        saveToFile(report.ToString());
-        return difFile;
+        report.AppendLine("Algorithm end comparing files corectly. \n");
+        SaveToFile();
     }
 
     public bool CompareLineByLine()
@@ -97,17 +98,14 @@ public class XmlComparator
             report.AppendLine("Exception: " + e.Message);
         }
         //Save report to file
-        saveToFile(report.ToString());
+
+        report.AppendLine("Algorithm end comparing files corectly. \n");
+        SaveToFile();
 
         return difFile;
     }
-    private Dictionary<string, string> GetsElementsFromFile(string filePath){
-        //SPrwadz czy linia zwiera w sobie "<Element "
-        //jesli tak to wez ta linie i zapisz jako klucz"
-        //Nastepnie pobieraj wszystkie linie az do </Element>
-        //Ale jesli linia ma w sobie inny <Element to powieksz zmienna deap o 1
-        //Jesli deap bedzie rowne 0 to zakoncz pobieranie lini dla tego 
-        //Zapisz to do kolekcji file1Elements 
+    private Dictionary<string, string> GetsElementsFromFile(string filePath)
+    {
 
         string pattern = @"<Element ";
         string exitPattern = @"</Element>";
@@ -169,8 +167,19 @@ public class XmlComparator
         
     }
 
-    private void saveToFile(string report)
+    private void SaveToFile()
     {
+        var differenceString = diffrence.ToString();
+        if(differenceString != "")
+        {
+            report.AppendLine("Files doesnt match !!!\n");
+            report.AppendLine("\n*****Differences:*****\n");
+            report.AppendLine(differenceString);
+        }
+        else
+        {
+            report.AppendLine("Files are the same !!!");
+        }
         try
         {
             var sw = new StreamWriter("report.txt");
@@ -182,7 +191,7 @@ public class XmlComparator
             Console.WriteLine(e.Message);
         }
     }
-    private Boolean CompareElement(string elementOne, string elementTwo)
+    private static Boolean CompareElement(string elementOne, string elementTwo)
     {
         if(elementOne==elementTwo)
         {
