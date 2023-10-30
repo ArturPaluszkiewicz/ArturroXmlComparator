@@ -13,3 +13,8 @@
 
 *bin/
 *obj/
+
+#testing File
+model1.xml
+model2.xml
+report.txt
