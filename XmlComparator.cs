@@ -24,7 +24,7 @@ public class XmlComparator
         report = new StringBuilder();
         diffrence = new StringBuilder();
     }
-    public void CompareByElement(Boolean withValue)
+    public void CompareByElement(bool withValue)
     {
         var file1Elements = GetsElementsFromFile(_fileOnePath);
         var file2Elements = GetsElementsFromFile(_fileTwoPath);
@@ -57,11 +57,9 @@ public class XmlComparator
         report.AppendLine("Algorithm end comparing files corectly. \n");
         SaveToFile();
     }
-
-    public bool CompareLineByLine()
+    public void CompareLineByLine(bool onlyLine)
     {
-        var report = new StringBuilder();
-        bool difFile = false;
+        report.AppendLine("Algorithm start compare files...");
         try
         {
             var lineNumber = 1;
@@ -74,11 +72,13 @@ public class XmlComparator
             {
                 if(line1!=line2)
                 {
-                    report.AppendLine("Difference in line: "+lineNumber);
-                    report.AppendLine("File1: "+line1);
-                    report.AppendLine("File2: "+line2);
-                    report.AppendLine();
-                    difFile = true;
+                    diffrence.AppendLine("Difference in line: "+lineNumber);
+                    if(onlyLine==false)
+                    {
+                    diffrence.AppendLine("File1: "+line1);
+                    diffrence.AppendLine("File2: "+line2);
+                    diffrence.AppendLine();
+                    }
                 }
                 lineNumber++;
                 line1 = sr1.ReadLine();
@@ -88,11 +88,6 @@ public class XmlComparator
 
             sr1.Close();
             sr2.Close();
-
-            if(!difFile)
-            {
-                report.AppendLine("File are the same");
-            }
         }catch(Exception e)
         {
             report.AppendLine("Exception: " + e.Message);
@@ -101,8 +96,6 @@ public class XmlComparator
 
         report.AppendLine("Algorithm end comparing files corectly. \n");
         SaveToFile();
-
-        return difFile;
     }
     private Dictionary<string, string> GetsElementsFromFile(string filePath)
     {
