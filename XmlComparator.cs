@@ -29,8 +29,6 @@ public class XmlComparator
 
         foreach(var element in file1Elements)
         {
-            // trzeba pobrac element i poszukac czy w drugiej liscie tez jest taki i jesli jest to sprawdziic czy sa takie same , 
-            //a nastepnie usunac go z listy
             if (file2Elements.ContainsKey(element.Key))
             {
                 if(!CompareElement(element.Value,file2Elements.GetValueOrDefault(element.Key)??""))
@@ -73,7 +71,7 @@ public class XmlComparator
 
             while(line1 != null || line2 != null)
             {
-                if(!line1.Equals(line2))
+                if(line1!=line2)
                 {
                     report.AppendLine("Difference in line: "+lineNumber);
                     report.AppendLine("File1: "+line1);
@@ -126,7 +124,7 @@ public class XmlComparator
                     string key;
                     if (elements.ContainsKey(line))
                     {
-                        key = (line + " v2");
+                        key = line + " v2";
                     }
                     else
                     {
@@ -136,13 +134,13 @@ public class XmlComparator
                     StringBuilder value = new();
                     int deap = 1;
                     line = sr.ReadLine();
-                    while(deap != 0)
+                    while(deap != 0 )
                     {
-                        if(Regex.IsMatch(line, pattern))
+                        if(Regex.IsMatch(line??"", pattern))
                         {
                             deap++;
                         }
-                        if(Regex.IsMatch(line, exitPattern))
+                        if(Regex.IsMatch(line??"", exitPattern))
                         {
                             deap--;
                         }
