@@ -1,0 +1,4 @@
+Algorithm start compare files...
+Algorithm end comparing files corectly. 
+
+Files are the same !!!
