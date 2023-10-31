@@ -9,12 +9,14 @@ public class XmlComparator
     private readonly string _fileTwoPath;
     private readonly StringBuilder report;
     private readonly StringBuilder diffrence;
+    private readonly StringBuilder errors;
     public XmlComparator(string fileOnePath, string fileTwoPath)
     {
         _fileOnePath = fileOnePath;
         _fileTwoPath = fileTwoPath;
         report = new StringBuilder();
         diffrence = new StringBuilder();
+        errors = new StringBuilder();
 
     }
     public XmlComparator()
@@ -23,6 +25,7 @@ public class XmlComparator
         _fileTwoPath = "model2.xml";
         report = new StringBuilder();
         diffrence = new StringBuilder();
+        errors = new StringBuilder();
     }
     public void CompareByElement(bool withValue)
     {
@@ -88,13 +91,13 @@ public class XmlComparator
 
             sr1.Close();
             sr2.Close();
+            report.AppendLine("Algorithm end comparing files corectly. \n");
         }catch(Exception e)
         {
-            report.AppendLine("Exception: " + e.Message);
+            report.AppendLine("Algorithm fail during comparing files...");
+            errors.AppendLine("LineByLine Comparator:");
+            errors.AppendLine("-Could not find files.");
         }
-        //Save report to file
-
-        report.AppendLine("Algorithm end comparing files corectly. \n");
         SaveToFile();
     }
     private Dictionary<string, string> GetsElementsFromFile(string filePath)
@@ -163,7 +166,13 @@ public class XmlComparator
     private void SaveToFile()
     {
         var differenceString = diffrence.ToString();
-        if(differenceString != "")
+        var errorsString = errors.ToString(); 
+        if(errorsString != "")
+        {
+            report.AppendLine("\n*****Errors:*****\n");
+            report.AppendLine(errorsString);
+        }
+        else if(differenceString != "")
         {
             report.AppendLine("Files doesnt match !!!\n");
             report.AppendLine("\n*****Differences:*****\n");

@@ -1,0 +1,8 @@
+Algorithm start compare files...
+Algorithm fail during comparing files...
+
+*****Errors:*****
+
+LineByLine Comparator:
+-Could not find files.
+

@@ -69,11 +69,19 @@ public class XmlComparatorTests
     }
 
     [Fact]
-    public void CompareLineByLine_WhenFilesAreNotCorrect_ShouldDrawFileReport()
+    public void CompareLineByLine_WhenFilesAreNotCorrect_ShouldDrawErrorReport()
     {
         //Arrange
+        string fileOnePath = "../../../Tests_Resources/FileToTest1.xml";
+        string fileTwoPath = "../../../Tests_Resources/FileToTest3.xml";
+        string expectedResultFilePath = "../../../Tests_Resources/LineByLineErrorResult.txt";
+        var expectedResult = ReadFile(expectedResultFilePath);
+        var comperator = new XmlComparator(fileOnePath,fileTwoPath);
         //Act
+        comperator.CompareLineByLine(true);
+        var result = ReadFile("report.txt");
         //Assert
+        Assert.Equal(expectedResult,result);
     }
 
     private static string ReadFile(string pathToFile)
@@ -83,6 +91,7 @@ public class XmlComparatorTests
         try
         {
             readedFile = sr.ReadToEnd();
+            sr.Close();
         }
         catch(Exception e)
         {
