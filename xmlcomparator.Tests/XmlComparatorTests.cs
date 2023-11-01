@@ -5,66 +5,66 @@ namespace xmlcomparator.Tests;
 public class XmlComparatorTests
 {
     [Fact]
-    public void CompareLineByLine_WhenFileAreTheSame_ShouldDrawCorrectReport()
+    public void CompareLineByLine_WhenFileAreTheSame_ShouldDrawFilesMatchReport()
     {
-        //Arrange - Zaladowac plik ze spodziewanym wynikiem testu, przygotowac pliki do porownania
+        //Arrange
         string fileOnePath = "../../../Tests_Resources/FileToTest1.xml";
         string fileTwoPath = "../../../Tests_Resources/FileToTest1.xml";
         string expectedResultFilePath = "../../../Tests_Resources/LineByLineCorrectResult.txt";
         var expectedResult = ReadFile(expectedResultFilePath);
         var comperator = new XmlComparator(fileOnePath,fileTwoPath);
-        //Act - uzyc funkcji
+        //Act
         comperator.CompareLineByLine(false);
         var result = ReadFile("report.txt");
-        //Assert - sprawdzic czy nowo utworzony plik report jest taki sam jak wczesniej przygotowany plik ze spodziewanym wynikiem
+        //Assert
         Assert.Equal(expectedResult,result);
     }
 
     [Fact]
-    public void CompareLineByLine_WhenFileAreTheSame_AndUsedWithOnlyLinesOptions_ShouldDrawCorrectReport()
+    public void CompareLineByLine_WhenFileAreTheSame_UsedWithOnlyLinesOptions_ShouldDrawFilesMatchReport()
     {
-        //Arrange - Zaladowac plik ze spodziewanym wynikiem testu, przygotowac pliki do porownania
+        //Arrange
         string fileOnePath = "../../../Tests_Resources/FileToTest1.xml";
         string fileTwoPath = "../../../Tests_Resources/FileToTest1.xml";
         string expectedResultFilePath = "../../../Tests_Resources/LineByLineCorrectResult.txt";
         var expectedResult = ReadFile(expectedResultFilePath);
         var comperator = new XmlComparator(fileOnePath,fileTwoPath);
-        //Act - uzyc funkcji
+        //Act
         comperator.CompareLineByLine(true);
         var result = ReadFile("report.txt");
-        //Assert - sprawdzic czy nowo utworzony plik report jest taki sam jak wczesniej przygotowany plik ze spodziewanym wynikiem
+        //Assert
         Assert.Equal(expectedResult,result);
     }
 
     [Fact]
-    public void CompareLineByLine_WhenFileAreDiffrent_ShouldDrawCorrectReport()
+    public void CompareLineByLine_WhenFileAreDiffrent_ShouldDrawFilesNotMatchReport()
     {
-        //Arrange - Zaladowac plik ze spodziewanym wynikiem testu, przygotowac pliki do porownania
+        //Arrange
         string fileOnePath = "../../../Tests_Resources/FileToTest1.xml";
         string fileTwoPath = "../../../Tests_Resources/FileToTest2.xml";
         string expectedResultFilePath = "../../../Tests_Resources/LineByLine24DifferencesResult.txt";
         var expectedResult = ReadFile(expectedResultFilePath);
         var comperator = new XmlComparator(fileOnePath,fileTwoPath);
-        //Act - uzyc funkcji
+        //Act
         comperator.CompareLineByLine(false);
         var result = ReadFile("report.txt");
-        //Assert - sprawdzic czy nowo utworzony plik report jest taki sam jak wczesniej przygotowany plik ze spodziewanym wynikiem
+        //Assert
         Assert.Equal(expectedResult,result);
     }
 
     [Fact]
-    public void CompareLineByLine_WhenFileAreTheSameAndMethodUsedWithOnlyLinesOptions_ShouldDrawCorrectReport()
+    public void CompareLineByLine_WhenFileAreDifferent_UsedWithOnlyLinesOptions_ShouldDrawFilesNotMatchReport()
     {
-        //Arrange - Zaladowac plik ze spodziewanym wynikiem testu, przygotowac pliki do porownania
+        //Arrange
         string fileOnePath = "../../../Tests_Resources/FileToTest1.xml";
         string fileTwoPath = "../../../Tests_Resources/FileToTest2.xml";
         string expectedResultFilePath = "../../../Tests_Resources/LineByLine24DifferencesResultOnlyLine.txt";
         var expectedResult = ReadFile(expectedResultFilePath);
         var comperator = new XmlComparator(fileOnePath,fileTwoPath);
-        //Act - uzyc funkcji
+        //Act
         comperator.CompareLineByLine(true);
         var result = ReadFile("report.txt");
-        //Assert - sprawdzic czy nowo utworzony plik report jest taki sam jak wczesniej przygotowany plik ze spodziewanym wynikiem
+        //Assert
         Assert.Equal(expectedResult,result);
     }
 
@@ -82,6 +82,24 @@ public class XmlComparatorTests
         var result = ReadFile("report.txt");
         //Assert
         Assert.Equal(expectedResult,result);
+    }
+
+    [Fact]
+    public void SaveToFile_WhenErrorNotEmpty_ShouldDrawErrorReport()
+    {
+
+    }
+
+    [Fact]
+    public void SaveToFile_WhenDifferencesNotEmpty_ShouldDrawNotMatchReport()
+    {
+        
+    }
+
+    [Fact]
+    public void SaveToFile_WhenDifferencesAndErrorsAreEmpty_ShouldDrawMatchReport()
+    {
+        
     }
 
     private static string ReadFile(string pathToFile)
