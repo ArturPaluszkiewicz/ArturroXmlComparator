@@ -100,10 +100,10 @@ public class XmlComparator
         }
         SaveToFile();
     }
-    private Dictionary<string, string> GetsElementsFromFile(string filePath)
+    public Dictionary<string, string> GetsElementsFromFile(string filePath)
     {
 
-        string pattern = @"<Element ";
+        string pattern = @"<Element";
         string exitPattern = @"</Element>";
         Dictionary<string, string> elements = new();
         try
@@ -115,16 +115,7 @@ public class XmlComparator
             {  
                 if(Regex.IsMatch(line, pattern))
                 {   
-                    string key;
-                    if (elements.ContainsKey(line))
-                    {
-                        key = line + " v2";
-                    }
-                    else
-                    {
-                        key = line;
-                    }
-                    //string key = checkIfElementAlredyAdded(ref elements,line,0);
+                    string key = CheckIfElementAlredyAdded(elements, line);
                     StringBuilder value = new();
                     int deap = 1;
                     line = sr.ReadLine();
@@ -141,7 +132,6 @@ public class XmlComparator
                         value.AppendLine(line);
                         line = sr.ReadLine();
                     }
-                    //dodaj do slownika
                     elements.Add(key,value.ToString());
                     temp = false;
                 }
@@ -160,7 +150,6 @@ public class XmlComparator
             Console.WriteLine(e.Message);
         }
         return elements;
-        
     }
 
     private void SaveToFile()
@@ -193,7 +182,7 @@ public class XmlComparator
             Console.WriteLine(e.Message);
         }
     }
-    private static Boolean CompareElement(string elementOne, string elementTwo)
+    private static bool CompareElement(string elementOne, string elementTwo)
     {
         if(elementOne==elementTwo)
         {
@@ -201,15 +190,21 @@ public class XmlComparator
         }
         return false;
     }
-    private string CheckIfElementAlredyAdded(ref Dictionary<string, string> listOfElements, string keyToCheck, int version)
+    private static string CheckIfElementAlredyAdded(Dictionary<string, string> listOfElements, string keyToCheck)
     {
-        if(version != 0)
+        int version = 0;
+        while(listOfElements.ContainsKey(keyToCheck))
         {
-            keyToCheck = keyToCheck+" v "+version;
-        }
-        if(listOfElements.ContainsKey(keyToCheck))
-        {
-            CheckIfElementAlredyAdded(ref listOfElements,keyToCheck,++version);
+            if(version == 0)
+            {
+                keyToCheck = keyToCheck+" v"+(version+1).ToString();
+            }
+            else
+            {
+                keyToCheck = keyToCheck.Remove(keyToCheck.Length - 1);
+                keyToCheck = keyToCheck+version.ToString();
+            }
+            version++;
         }
         return keyToCheck;
     }
