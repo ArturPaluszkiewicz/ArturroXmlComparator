@@ -1,3 +1,4 @@
+using FluentAssertions;
 using xmlcomperator;
 
 namespace xmlcomparator.Tests;
@@ -73,7 +74,7 @@ public class XmlComparatorTests
     {
         //Arrange
         string fileOnePath = "../../../Tests_Resources/FileToTest1.xml";
-        string fileTwoPath = "../../../Tests_Resources/FileToTest3.xml";
+        string fileTwoPath = "../../../Tests_Resources/FileToTest33.xml";
         string expectedResultFilePath = "../../../Tests_Resources/LineByLineErrorResult.txt";
         var expectedResult = ReadFile(expectedResultFilePath);
         var comperator = new XmlComparator(fileOnePath,fileTwoPath);
@@ -84,22 +85,18 @@ public class XmlComparatorTests
         Assert.Equal(expectedResult,result);
     }
 
-    [Fact]
-    public void SaveToFile_WhenErrorNotEmpty_ShouldDrawErrorReport()
+    [Theory]
+    [InlineData("../../../Tests_Resources/FileToTest1.xml",6)]
+    [InlineData("../../../Tests_Resources/FileToTest2.xml",5)]
+    [InlineData("../../../Tests_Resources/FileToTest3.xml",4)]
+    public void GetsElementsFromFile_ShouldReadCorrectNumberOfElements(string filePath, int numberOfElements)
     {
-
-    }
-
-    [Fact]
-    public void SaveToFile_WhenDifferencesNotEmpty_ShouldDrawNotMatchReport()
-    {
-        
-    }
-
-    [Fact]
-    public void SaveToFile_WhenDifferencesAndErrorsAreEmpty_ShouldDrawMatchReport()
-    {
-        
+        //Arrange
+        var xmlComparator = new XmlComparator();
+        //Act
+        var result = xmlComparator.GetsElementsFromFile(filePath);
+        //Assert
+        result.Should().HaveCount(numberOfElements);
     }
 
     private static string ReadFile(string pathToFile)
