@@ -99,6 +99,36 @@ public class XmlComparatorTests
         result.Should().HaveCount(numberOfElements);
     }
 
+    [Fact]
+    public void CompareByElement__WhenFileAreDiffrent_ShouldDrawFilesNotMatchReport()
+    {
+        //Arrange
+        //Act
+        //Assert
+    }
+
+    [Fact]
+    public void CompareByElement__WhenFileAreDiffrent_WithValueOption_ShouldDrawFilesNotMatchReport()
+    {
+        //Arrange
+        //Act
+        //Assert
+    }
+    [Fact]
+    public void CompareByElement__WhenFileAreTheSame_ShouldDrawFilesMatchReport()
+    {
+        //Arrange
+        //Act
+        //Assert
+    }
+    [Fact]
+    public void CompareByElement__WhenFileAreTheSame_WithValueOption_ShouldDrawFilesMatchReport()
+    {
+        //Arrange
+        //Act
+        //Assert
+    }
+
     private static string ReadFile(string pathToFile)
     {
         var sr = new StreamReader(pathToFile);
