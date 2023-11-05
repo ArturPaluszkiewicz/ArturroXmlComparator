@@ -1,36 +1,32 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+using xmlcomparator;
 
 namespace xmlcomperator;
 
 public class XmlComparator
 {
-    private readonly string _fileOnePath;
-    private readonly string _fileTwoPath;
+    private string fileOnePath;
+    private string fileTwoPath;
     private readonly StringBuilder report;
     private readonly StringBuilder diffrence;
     private readonly StringBuilder errors;
-    public XmlComparator(string fileOnePath, string fileTwoPath)
-    {
-        _fileOnePath = fileOnePath;
-        _fileTwoPath = fileTwoPath;
-        report = new StringBuilder();
-        diffrence = new StringBuilder();
-        errors = new StringBuilder();
-
-    }
+    private ComparatorType type;
+    private string reportPath;
     public XmlComparator()
     {
-        _fileOnePath = "model1.xml";
-        _fileTwoPath = "model2.xml";
+        fileOnePath = "model1.xml";
+        fileTwoPath = "model2.xml";
+        reportPath = "report.txt";
+        type = ComparatorType.Line;
         report = new StringBuilder();
         diffrence = new StringBuilder();
         errors = new StringBuilder();
     }
     public void CompareByElement(bool withValue)
     {
-        var file1Elements = GetsElementsFromFile(_fileOnePath);
-        var file2Elements = GetsElementsFromFile(_fileTwoPath);
+        var file1Elements = GetsElementsFromFile(fileOnePath);
+        var file2Elements = GetsElementsFromFile(fileTwoPath);
 
         report.AppendLine("Algorithm start compare files...");
 
@@ -66,8 +62,8 @@ public class XmlComparator
         try
         {
             var lineNumber = 1;
-            var sr1 = new StreamReader(_fileOnePath);
-            var sr2 = new StreamReader(_fileTwoPath);
+            var sr1 = new StreamReader(fileOnePath);
+            var sr2 = new StreamReader(fileTwoPath);
             var line1 = sr1.ReadLine();
             var line2 = sr2.ReadLine();
 
@@ -151,7 +147,25 @@ public class XmlComparator
         }
         return elements;
     }
-
+    public void Compare()
+    {
+        if(type == ComparatorType.Element)
+        {
+            CompareByElement(false);
+        }
+        if(type == ComparatorType.Line)
+        {
+            CompareLineByLine(false);
+        }
+        if(type == ComparatorType.ElementWithValue)
+        {
+            CompareByElement(true);
+        }
+        if(type == ComparatorType.OnlyLine)
+        {
+            CompareLineByLine(true);
+        }
+    }
     private void SaveToFile()
     {
         var differenceString = diffrence.ToString();
@@ -208,4 +222,18 @@ public class XmlComparator
         }
         return keyToCheck;
     }
+    public void ChangeType(ComparatorType type)
+    {
+        this.type = type;
+    }
+    public void SetFilesPath(string path1, string path2)
+    {
+        this.fileOnePath = path1;
+        this.fileTwoPath = path2;
+    }
+    public void SetReportPath(string reportPath)
+    {
+        this.reportPath = reportPath;
+    }
+
 }

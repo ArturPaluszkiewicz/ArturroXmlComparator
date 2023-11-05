@@ -4,28 +4,38 @@ public class XmlComparatorController
 {
     public XmlComparatorController(string[] args)
     {
+        XmlComparator xmlComparator = new();
        if (args.Length == 0)
        {
-            new XmlComparator("FileToTest3.xml","FileToTest2.xml").CompareByElement(false);
-            
-       }else {
-            try{
-                if(args[0] == "-t" || args[0] == "--type")
+            new XmlComparator();
+       }
+       else
+       {
+            var whichArg = 0;
+            foreach(var arg in args)
+            {   
+                if(arg == "-p" || arg == "--path")
                 {
-                    if(args[1] == "line")
+                    xmlComparator.SetFilesPath(arg);
+                }
+                if(arg == "-r" || arg == "--report")
+                {
+                    xmlComparator.SetReportPath();
+                }
+                if(arg == "-t" || arg == "--type")
+                {
+                    if(args[whichArg+1] == "line")
                     {
-                        new XmlComparator().CompareLineByLine(false);
+                        xmlComparator.ChangeType(xmlcomparator.ComparatorType.Line);
                     }
-                    if(args[1] == "elements")
+                    if(args[whichArg+1] == "elements")
                     {
-                        new XmlComparator().CompareByElement(false);
+                        xmlComparator.ChangeType(xmlcomparator.ComparatorType.Element);
                     }
                 }
-            }catch(IndexOutOfRangeException e)
-            {
-                Console.Write("Wrongs comends, use -h or --help to see correct format");
+                whichArg++;
             }
-       }
+        }
 
     }
 }
