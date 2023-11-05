@@ -1,0 +1,10 @@
+Algorithm start compare files...
+Algorithm end comparing files corectly. 
+
+Files doesnt match !!!
+
+
+*****Differences:*****
+
+		<Element Type="SqlDatabaseOptions">
+

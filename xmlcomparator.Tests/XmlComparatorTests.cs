@@ -11,7 +11,7 @@ public class XmlComparatorTests
         //Arrange
         string fileOnePath = "../../../Tests_Resources/FileToTest1.xml";
         string fileTwoPath = "../../../Tests_Resources/FileToTest1.xml";
-        string expectedResultFilePath = "../../../Tests_Resources/LineByLineCorrectResult.txt";
+        string expectedResultFilePath = "../../../Tests_Resources/FilesMatchResult.txt";
         var expectedResult = ReadFile(expectedResultFilePath);
         var comperator = new XmlComparator(fileOnePath,fileTwoPath);
         //Act
@@ -27,7 +27,7 @@ public class XmlComparatorTests
         //Arrange
         string fileOnePath = "../../../Tests_Resources/FileToTest1.xml";
         string fileTwoPath = "../../../Tests_Resources/FileToTest1.xml";
-        string expectedResultFilePath = "../../../Tests_Resources/LineByLineCorrectResult.txt";
+        string expectedResultFilePath = "../../../Tests_Resources/FilesMatchResult.txt";
         var expectedResult = ReadFile(expectedResultFilePath);
         var comperator = new XmlComparator(fileOnePath,fileTwoPath);
         //Act
@@ -103,30 +103,62 @@ public class XmlComparatorTests
     public void CompareByElement__WhenFileAreDiffrent_ShouldDrawFilesNotMatchReport()
     {
         //Arrange
+        string fileOnePath = "../../../Tests_Resources/FileToTest1.xml";
+        string fileTwoPath = "../../../Tests_Resources/FileToTest2.xml";
+        string expectedResultFilePath = "../../../Tests_Resources/CompareByElementsDifferencesResult.txt";
+        var expectedResult = ReadFile(expectedResultFilePath);
+        var comperator = new XmlComparator(fileOnePath,fileTwoPath);
         //Act
+        comperator.CompareByElement(false);
+        var result = ReadFile("report.txt");
         //Assert
+        Assert.Equal(expectedResult,result);
     }
 
     [Fact]
     public void CompareByElement__WhenFileAreDiffrent_WithValueOption_ShouldDrawFilesNotMatchReport()
     {
         //Arrange
+        string fileOnePath = "../../../Tests_Resources/FileToTest1.xml";
+        string fileTwoPath = "../../../Tests_Resources/FileToTest2.xml";
+        string expectedResultFilePath = "../../../Tests_Resources/CompareByElementsDifferencesResultWithValue.txt";
+        var expectedResult = ReadFile(expectedResultFilePath);
+        var comperator = new XmlComparator(fileOnePath,fileTwoPath);
         //Act
+        comperator.CompareByElement(true);
+        var result = ReadFile("report.txt");
         //Assert
+        Assert.Equal(expectedResult,result);
     }
     [Fact]
     public void CompareByElement__WhenFileAreTheSame_ShouldDrawFilesMatchReport()
     {
         //Arrange
+        string fileOnePath = "../../../Tests_Resources/FileToTest1.xml";
+        string fileTwoPath = "../../../Tests_Resources/FileToTest1.xml";
+        string expectedResultFilePath = "../../../Tests_Resources/FilesMatchResult.txt";
+        var expectedResult = ReadFile(expectedResultFilePath);
+        var comperator = new XmlComparator(fileOnePath,fileTwoPath);
         //Act
+        comperator.CompareByElement(false);
+        var result = ReadFile("report.txt");
         //Assert
+        Assert.Equal(expectedResult,result);
     }
     [Fact]
     public void CompareByElement__WhenFileAreTheSame_WithValueOption_ShouldDrawFilesMatchReport()
     {
         //Arrange
+        string fileOnePath = "../../../Tests_Resources/FileToTest2.xml";
+        string fileTwoPath = "../../../Tests_Resources/FileToTest2.xml";
+        string expectedResultFilePath = "../../../Tests_Resources/FilesMatchResult.txt";
+        var expectedResult = ReadFile(expectedResultFilePath);
+        var comperator = new XmlComparator(fileOnePath,fileTwoPath);
         //Act
+        comperator.CompareByElement(true);
+        var result = ReadFile("report.txt");
         //Assert
+        Assert.Equal(expectedResult,result);
     }
 
     private static string ReadFile(string pathToFile)
