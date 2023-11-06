@@ -235,5 +235,8 @@ public class XmlComparator
     {
         this.reportPath = reportPath;
     }
-
+    public void AddError(string errortText)
+    {
+        errors.AppendLine(errortText);
+    }
 }
