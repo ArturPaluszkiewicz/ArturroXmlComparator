@@ -4,7 +4,7 @@ using xmlcomparator;
 
 namespace xmlcomperator;
 
-public class XmlComparator
+public class XmlComparator : IXmlComparator
 {
     private string fileOnePath;
     private string fileTwoPath;
