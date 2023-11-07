@@ -49,6 +49,10 @@ public class XmlComparatorController
                     {
                         xmlComparator.ChangeType(xmlcomparator.ComparatorType.ElementWithValue);
                     }
+                    else
+                    {
+                        xmlComparator.AddError("Type argument has bad options, use -h or --help to check correct format");
+                    }
                 }
                 whichArg++;
             }
