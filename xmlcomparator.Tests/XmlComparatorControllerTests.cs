@@ -44,6 +44,24 @@ public class XmlComparatorControllerTests
     }
 
     [Theory]
+    [InlineData("-path","model1.xml","model2.xml","-p")]
+    [InlineData("-pat","model1.xml","model2.xml","--path")]
+    [InlineData("-p","-p","-p","model2.xml")]
+    [InlineData("asd","-p","--path","model2.xml")]
+    public void Start_WhenNotGivePathArguments_ShouldUseAddErrorFunction(string arg1, string arg2, string arg3, string arg4)
+    {
+        //Arrange
+        var mocXmlComperator = new Mock<IXmlComparator>();
+        string[] args = new string[] {arg1,arg2,arg3,arg4};
+        var xmlController = new XmlComparatorController(args, mocXmlComperator.Object);
+        CreateFilesToTests();
+        //Act
+        xmlController.Start();
+        //Assert
+        mocXmlComperator.Verify(x => x.AddError("Bad path arguments"),Times.Once);
+    }
+
+    [Theory]
     [InlineData("--path","model1.xml","-r","report.txt")]
     [InlineData("--report","report","model2.xml","model.xml")]
     [InlineData("-repo","-r","report","model2.xml")]
@@ -58,6 +76,21 @@ public class XmlComparatorControllerTests
         xmlController.Start();
         //Assert
         mocXmlComperator.Verify(x => x.SetReportPath("report.txt"), Times.Once);
+    }
+
+    [Theory]
+    [InlineData("-repo","-rara","report","-r")]
+    [InlineData("asd","-report","report.txt","--report")]
+    public void Start_WhenNotGiveReportArguments_ShouldUseAddReportFunction(string arg1, string arg2, string arg3, string arg4)
+    {
+        //Arrange
+        var mocXmlComperator = new Mock<IXmlComparator>();
+        string[] args = new string[] {arg1,arg2,arg3,arg4};
+        var xmlController = new XmlComparatorController(args, mocXmlComperator.Object);
+        //Act
+        xmlController.Start();
+        //Assert
+        mocXmlComperator.Verify(x => x.AddError("Bad report argument"), Times.Once);
     }
 
     [Theory]

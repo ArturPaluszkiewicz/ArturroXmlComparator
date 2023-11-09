@@ -20,7 +20,7 @@ public class XmlComparatorController
             {   
                 if(arg == "-p" || arg == "--path")
                 {
-                    if(_args.Length>whichArg+1 || _args.Length>whichArg+2)
+                    if(_args.Length>whichArg+1 && _args.Length>whichArg+2)
                     {
                         if(!CheckIfFileExist(_args[whichArg+1])
                         || !CheckIfFileExist(_args[whichArg+2])
