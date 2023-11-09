@@ -187,7 +187,7 @@ public class XmlComparator : IXmlComparator
         }
         try
         {
-            var sw = new StreamWriter("report.txt");
+            var sw = new StreamWriter(reportPath);
             sw.Write(report.ToString());
             sw.Close();
         }catch(Exception e)
